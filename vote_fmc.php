@@ -7,10 +7,10 @@ if($_SERVER['REMOTE_ADDR']!="::1") {
 	die("Invalid Access");
 }
 
-$apost="president";
+$apost="fmc";
 $total=2;
-$next="vote_sports";
-$form="castvote_presi";
+$next="vote";
+$form="castvote_fmc";
 //No of checked radio buttons to be modified in validate
 
 if($_SESSION['user']==1) {
@@ -23,7 +23,7 @@ if($_SESSION['user']==1) {
 	</head>
 	<body>
 		<form method="POST" action="<?php echo $form; ?>.php">
-		<h1>President, Students' Gymkhana</h1>
+		<h1>General Secretary, Films and Media Council</h1>
 		<table cellspacing="10" align="center">
 		<?php
 		$idarr=array();
@@ -75,7 +75,7 @@ if($_SESSION['user']==1) {
 			<input type="hidden" name="next" value="<?php echo $next; ?>" />
 			<input type="radio" id="pref0" name="pref0" value="<?php echo $apost; ?>" checked="true" onclick="nopref()" />
 			No Preference<br/><br/>
-			<input type="submit" value="Cast My Vote" />
+			<input type="submit" value="Cast My Vote" onclick="return validate(<?php echo $total-1; ?>)" />
 		</div>
 		</form>
 		<audio id="sound" src="audio/beep-1.mp3"></audio>

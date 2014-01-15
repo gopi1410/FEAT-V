@@ -37,16 +37,19 @@ $count=$row['votecount'];
 		
 		Select Batch:
 		<select name="batch" id="batch">
-			<option value="Senator, UG Y13">UG Y13</option>
-			<option value="Senator, M.Tech. Y13">M.Tech Y13</option>
-			<option value="Senator, M.Sc. Y13">M.Sc. Y13</option>
-			<option value="Senator, MBA + M.Des. + other Y13">Others(MBA, M.Des.) Y13</option>
-			<option value="Senator, UG Y12">UG Y12</option>
-			<option value="Senator, M.Tech. Y12">M.Tech Y12</option>
-			<option value="Senator, M.Sc. Y12">M.Sc. Y12</option>
-			<option value="Senator, MBA + M.Des. + other Y12">Others(MBA, M.Des.) Y12</option>
-			<option value="Senator, UG Y11">UG Y11</option>
+			<option value="Senator, UG Y9">UG Y9</option>
 			<option value="Senator, UG Y10">UG Y10</option>
+			<option value="Senator, UG Y10 (Dual)">UG Y10 (Dual)</option>
+			<option value="Senator, UG Y11">UG Y11</option>
+			<option value="Senator, UG Y12">UG Y12</option>
+			<option value="Senator, UG Y13">UG Y13</option>
+			<option value="Senator, M.Tech. Y12">M.Tech Y12</option>
+			<option value="Senator, M.Tech. Y13">M.Tech Y13</option>
+			<option value="Senator, MBA + M.Des. Y12">MBA + M.Des. Y12</option>
+			<option value="Senator, MBA + M.Des. Y13">MBA + M.Des. Y13</option>
+			<option value="Senator, M.Sc. Y12">M.Sc. Y12</option>
+			<option value="Senator, M.Sc. Y13">M.Sc. Y13</option>
+			<option value="Senator, PhD">PhD</option>
 		</select><br/><br/>
 		Enter Key: <input type="password" name="key" /><br/><br/>
 		<input type="submit" value="Proceed to vote" />

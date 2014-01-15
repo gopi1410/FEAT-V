@@ -8,31 +8,31 @@
 <!doctype html>
 
 <?php
+$exec_arr=array("president", "sports", "cultural", "scitech", "fmc");
+$disp_arr=array("President, Students' Gymkhana", "General Secretary, Games and Sports Council", "General Secretary, Cultural Council", "General Secretary, Science and Technology Council", "General Secretary, Films and Media Council");
 function display_result($post) {
-	$exec_arr=array("President", "Sports Secretary");
+	
+	global $exec_arr;
 	if(in_array($post, $exec_arr)) {
-
-		//President
-		if($post=="President") {
-			$sql="SELECT * FROM president";
-			$result=mysql_query($sql) or die(mysql_error());
-			echo "<table cellspacing='9'>";
-			while($row=mysql_fetch_assoc($result)) {
-				echo '<tr>';
-				echo '<td style="color:brown"><b>'.$row['candidates'].'</b></td>';
-				echo '<td>'.$row['votes'].'</td>';
-				echo '</tr>';
-			}
-			echo "</table>";
-			$sql="SELECT * FROM nopref WHERE post='".$post."'";
-			$result=mysql_query($sql) or die(mysql_error());
-			$row=mysql_fetch_assoc($result);
-			echo "<b>No preference votes: </b>".$row['votes'];
-			echo "<br/><br/><hr/>";
+		$sql="SELECT * FROM ".$post;
+		$result=mysql_query($sql) or die(mysql_error());
+		echo "<table cellspacing='9'>";
+		while($row=mysql_fetch_assoc($result)) {
+			echo '<tr>';
+			echo '<td style="color:brown"><b>'.$row['candidates'].'</b></td>';
+			echo '<td>'.$row['votes'].'</td>';
+			echo '</tr>';
 		}
+		echo "</table>";
+		$sql="SELECT * FROM nopref WHERE post='".$post."'";
+		$result=mysql_query($sql) or die(mysql_error());
+		$row=mysql_fetch_assoc($result);
+		echo "<b>No preference votes: </b>".$row['votes'];
+		echo "<br/><br/><hr/>";
+		
 
 		//Sports Sec
-		if($post=="Sports Secretary") {
+		/*if($post=="Sports Secretary") {
 			$sql="SELECT * FROM sports";
 			$result=mysql_query($sql) or die(mysql_error());
 			echo "<table cellspacing='9'>";
@@ -48,7 +48,7 @@ function display_result($post) {
 			$row=mysql_fetch_assoc($result);
 			echo "<b>No preference votes: </b>".$row['votes'];
 			echo "<br/><br/><hr/>";
-		}
+		}*/
 	}
 	else {
 		$sql="SELECT * FROM candidates WHERE post='".$post."' ORDER BY Name";
@@ -101,16 +101,28 @@ $form='<br/>
 
 <?php
 if(isset($_POST['submit'])) {
-	if(isset($_POST['passwd']) && $_POST['passwd']=="gopi") {
+	include('config.php');
+	if(isset($_POST['passwd']) && $_POST['passwd']==$resultsPass) {
 		//valid password; proceed with showing results
 		include('dbconnect.php');
 
-		echo "<h1>Results</h1><br/>";
+		echo "<h1>Results:</h1><br/>";
 
-		$sql="SELECT post FROM nopref ORDER BY post";
+		$sql="SELECT votecount from votes";
+		$result=mysql_query($sql) or die(mysql_error());
+		$row=mysql_fetch_assoc($result);
+		$count=$row['votecount'];
+		echo "Total number of votes: <b>".$count."</b><br/><br/>";
+
+		$sql="SELECT post FROM nopref ORDER BY id";
 		$result=mysql_query($sql) or die(mysql_error());
 		while($row=mysql_fetch_assoc($result)) {
-			echo "<h3><u>".$row['post'].":</u></h3>";
+			if(array_search($row['post'], $exec_arr)!==FALSE) {
+				echo "<h3><u>".$disp_arr[array_search($row['post'], $exec_arr)].":</u></h3>";
+			}
+			else {
+				echo "<h3><u>".$row['post'].":</u></h3>";
+			}
 			display_result($row['post']);
 		}
 	}

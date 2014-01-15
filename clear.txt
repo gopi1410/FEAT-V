@@ -1,0 +1,3 @@
+UPDATE `candidates` SET `votes1`=0,`votes2`=0,`votes3`=0;
+UPDATE `votes` SET `votecount`=0;
+UPDATE `cultural`, `fmc`, `president`, `scitech`, `sports`, `nopref` SET `cultural`.`votes`=0, `fmc`.`votes`=0, `president`.`votes`=0, `scitech`.`votes`=0, `sports`.`votes`=0, `nopref`.`votes`=0;

@@ -7,9 +7,10 @@ if($_SERVER['REMOTE_ADDR']!="::1") {
 	die("Invalid Access");
 }
 
-$apost="Sports Secretary";
-$total=2;
-$next="final";
+$apost="sports";
+$total=1;
+$next="vote_cult";
+$form="castvote_sports";
 //No of checked radio buttons to be modified in validate
 
 if($_SESSION['user']==1) {
@@ -21,43 +22,54 @@ if($_SESSION['user']==1) {
 		<script type="text/javascript" src="myvote.js"></script>
 	</head>
 	<body>
-		<form method="POST" action="castvote.php">
-		<h1><?php echo $apost; ?></h1>
+		<form method="POST" action="<?php echo $form; ?>.php">
+		<h1>General Secretary, Games and Sports Council</h1>
 		<table cellspacing="10" align="center">
 		<?php
 		$idarr=array();
-		$sql="SELECT * FROM candidates WHERE post = '".$apost."'";
+		$namearr=array();
+		$sql="SELECT * FROM candidates WHERE post = '".$apost."' ORDER BY Name";
 		$result=mysql_query($sql) or die(mysql_error());
 		echo "<tr>";
 		while($row=mysql_fetch_assoc($result)) {
 			array_push($idarr, $row['id']);
+			array_push($namearr, $row['Name']);
 			echo '<td><img class="candpic" src="pics/'.$row['pic'].'" /></td>';
 		}
 		echo "</tr>";
 		
-		mysql_data_seek($result, 0 );
 		echo '<tr align="center">';
-		while($row=mysql_fetch_assoc($result)) {
-			echo '<td><b>'.$row['Name'].'</b></td>';
+		foreach($namearr as $val) {
+			echo '<td><b>'.$val.'</b></td>';
 		}
 		echo '</tr>';
 		?>
 		
 		<tr align="center">
 			<td>
-				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[0]; ?>" />1<sup>st</sup> preference<br/>
-			</td>
-			<td>
-				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[1]; ?>" />1<sup>st</sup> preference<br/>
+				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[0]; ?>" />Vote<br/>
 			</td>
 		</tr>
 		</table>
 		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('input[type="submit"]').on('click', function() {
+					sub = validate(<?php echo $total-1; ?>);
+					if(sub) {
+						$(this).prop('disabled', true);
+						this.form.submit();
+					}
+					else {
+						return false;
+					}
+				});
+			});
+		</script>
 		<div align="center">
 			<br/>
 			<input type="hidden" name="total" value="<?php echo $total; ?>" />
 			<input type="hidden" name="next" value="<?php echo $next; ?>" />
-			<input type="hidden" name="executive" value="sports" />
 			<input type="radio" id="pref0" name="pref0" value="<?php echo $apost; ?>" checked="true" onclick="nopref()" />
 			No Preference<br/><br/>
 			<input type="submit" value="Cast My Vote" onclick="return validate(<?php echo $total-1; ?>)" />

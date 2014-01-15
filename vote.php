@@ -9,8 +9,13 @@ if($_SERVER['REMOTE_ADDR']!="::1") {
 
 $apost=$_SESSION['post'];
 $total=2;
-$next="vote_presi";
+$next="final";
 //No of checked radio buttons to be modified in validate
+
+$no_polling=array("Senator, UG Y9", "Senator, UG Y10", "Senator, UG Y10 (Dual)", "Senator, UG Y11", "Senator, M.Tech. Y12", "Senator, M.Tech. Y13", "Senator, MBA + M.Des. Y12", "Senator, MBA + M.Des. Y13", "Senator, M.Sc. Y12", "Senator, M.Sc. Y13");
+if(in_array($apost, $no_polling)) {
+	header("Location: final.php");
+}
 
 if($_SESSION['user']==1) {
 ?>
@@ -26,20 +31,21 @@ if($_SESSION['user']==1) {
 		<table cellspacing="10" align="center">
 		<?php
 		$idarr=array();
-		$sql="SELECT * FROM candidates WHERE post = '".$apost."'";
+		$namearr=array();
+		$sql="SELECT * FROM candidates WHERE post = '".$apost."' ORDER BY Name";
 		$result=mysql_query($sql) or die(mysql_error());
 		echo "<tr>";
 		while($row=mysql_fetch_assoc($result)) {
 			array_push($idarr, $row['id']);
-			echo '<td><img class="candpic" src="pics/'.$row['pic'].'" /></td>';
+			array_push($namearr, $row['Name']);
+			echo '<td><img class="candpic" src="pics/senators/'.$row['pic'].'" /></td>';
 		}
 		//150x200 for large data
 		echo "</tr>";
 		
-		mysql_data_seek($result, 0 );
 		echo '<tr align="center">';
-		while($row=mysql_fetch_assoc($result)) {
-			echo '<td><b>'.$row['Name'].'</b></td>';
+		foreach($namearr as $val) {
+			echo '<td><b>'.$val.'</b></td>';
 		}
 		echo '</tr>';
 		$len=count($idarr);
@@ -58,9 +64,43 @@ if($_SESSION['user']==1) {
 		</tr>
 		</table>
 		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('input[type="submit"]').on('click', function() {
+					sub = validate(3);
+					if(sub) {
+						$(this).prop('disabled', true);
+						this.form.submit();
+					}
+					else {
+						return false;
+					}
+				});
+			});
+		</script>
 		<div align="center">
 			<?php
-			if($len>5) {
+			if($len==9) {
+				?>
+				<style type="text/css">
+				.candpic {
+					width: 135px;
+					height: 180px;
+				}
+				</style>
+				<?php
+			}
+			else if($len==10) {
+				?>
+				<style type="text/css">
+				.candpic {
+					width: 120px;
+					height: 175px;
+				}
+				</style>
+				<?php
+			}
+			else if($len>5) {
 				?>
 				<style type="text/css">
 				.candpic {
@@ -68,15 +108,14 @@ if($_SESSION['user']==1) {
 					height: 200px;
 				}
 				</style>
-				<?
+				<?php
 			}
 			?>
 
-			<br/>
+			<br/><br/>
 			<input type="hidden" name="total" value="<?php echo $total; ?>" />
 			<input type="hidden" name="next" value="<?php echo $next; ?>" />
-			<input type="hidden" name="executive" value="no" /><br/>
-			<input type="submit" value="Cast My Vote" onclick="return validate(3);" />
+			<input type="submit" value="Cast My Vote" />
 		</div>
 		</form>
 		<audio id="sound" src="audio/beep-1.mp3"></audio>

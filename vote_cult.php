@@ -7,10 +7,10 @@ if($_SERVER['REMOTE_ADDR']!="::1") {
 	die("Invalid Access");
 }
 
-$apost="president";
-$total=2;
-$next="vote_sports";
-$form="castvote_presi";
+$apost="cultural";
+$total=3;
+$next="vote_scitech";
+$form="castvote_cult";
 //No of checked radio buttons to be modified in validate
 
 if($_SESSION['user']==1) {
@@ -23,7 +23,7 @@ if($_SESSION['user']==1) {
 	</head>
 	<body>
 		<form method="POST" action="<?php echo $form; ?>.php">
-		<h1>President, Students' Gymkhana</h1>
+		<h1>General Secretary, Cultural Council</h1>
 		<table cellspacing="10" align="center">
 		<?php
 		$idarr=array();
@@ -47,10 +47,16 @@ if($_SESSION['user']==1) {
 		
 		<tr align="center">
 			<td>
-				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[0]; ?>" />Vote<br/>
+				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[0]; ?>" />1<sup>st</sup> preference<br/>
+				<input type="radio" class="pref" name="pref2" value="<?php echo $idarr[0]; ?>" />2<sup>nd</sup> preference<br/>
 			</td>
 			<td>
-				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[1]; ?>" />Vote<br/>
+				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[1]; ?>" />1<sup>st</sup> preference<br/>
+				<input type="radio" class="pref" name="pref2" value="<?php echo $idarr[1]; ?>" />2<sup>nd</sup> preference<br/>
+			</td>
+			<td>
+				<input type="radio" class="pref" name="pref1" value="<?php echo $idarr[2]; ?>" />1<sup>st</sup> preference<br/>
+				<input type="radio" class="pref" name="pref2" value="<?php echo $idarr[2]; ?>" />2<sup>nd</sup> preference<br/>
 			</td>
 		</tr>
 		</table>
