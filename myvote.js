@@ -9,10 +9,15 @@ function detectFS() {
 	setTimeout(detectFS, 2000);
 }
 function validate(x) {
-	if(x==0) {
-		return true;
-	}
 	n=$('input[type=radio]:checked').size();
+	if(x==0) {
+		if(n==1)
+			return true;
+		else {
+			alert('You have to fill in 1 preference for your vote to be valid OR no preference');
+			return false;
+		}
+	}
 	if(n==1 && $("#pref0").is(":checked")) {
 		return true;
 	}

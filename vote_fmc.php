@@ -73,9 +73,9 @@ if($_SESSION['user']==1) {
 			<br/>
 			<input type="hidden" name="total" value="<?php echo $total; ?>" />
 			<input type="hidden" name="next" value="<?php echo $next; ?>" />
-			<input type="radio" id="pref0" name="pref0" value="<?php echo $apost; ?>" checked="true" onclick="nopref()" />
+			<input type="radio" id="pref0" name="pref0" value="<?php echo $apost; ?>" onclick="nopref()" />
 			No Preference<br/><br/>
-			<input type="submit" value="Cast My Vote" onclick="return validate(<?php echo $total-1; ?>)" />
+			<input type="submit" value="Cast My Vote" />
 		</div>
 		</form>
 		<audio id="sound" src="audio/beep-1.mp3"></audio>
